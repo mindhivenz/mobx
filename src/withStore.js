@@ -1,6 +1,8 @@
 import React from 'react'
 import shallowEqual from 'shallowequal'
 
+/* eslint-disable no-console */
+
 // REVISIT: should we be reactive to observable changes used in constructor?
 
 export default ({
@@ -25,7 +27,7 @@ export default ({
           this.store = createStore(this.props)
           updateStore(this.store, this.props)
         } catch (e) {
-          console.error(`Failed to create store for ${storeClass}`, e)
+          console.error(`Failed to create store for ${storeClass.name}`, e)
           throw e
         }
       }
@@ -38,7 +40,7 @@ export default ({
           }
           updateStore(this.store, nextProps)
         } catch (e) {
-          console.error(`Failed to recreate/update store for ${storeClass}`, e)
+          console.error(`Failed to recreate/update store for ${storeClass.name}`, e)
           throw e
         }
       }
