@@ -23,26 +23,16 @@ export default ({
       store = null
 
       componentWillMount() {
-        try {
-          this.store = createStore(this.props)
-          updateStore(this.store, this.props)
-        } catch (e) {
-          console.error(`Failed to create store for ${storeClass.name}`, e)
-          throw e
-        }
+        this.store = createStore(this.props)
+        updateStore(this.store, this.props)
       }
 
       componentWillReceiveProps(nextProps) {
-        try {
-          if (shouldRecreateStore(this.props, nextProps)) {
-            stopStore(this.store)
-            this.store = createStore(nextProps)
-          }
-          updateStore(this.store, nextProps)
-        } catch (e) {
-          console.error(`Failed to recreate/update store for ${storeClass.name}`, e)
-          throw e
+        if (shouldRecreateStore(this.props, nextProps)) {
+          stopStore(this.store)
+          this.store = createStore(nextProps)
         }
+        updateStore(this.store, nextProps)
       }
 
       componentWillUnmount() {
