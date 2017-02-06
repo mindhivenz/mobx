@@ -7,7 +7,7 @@ import shallowEqual from 'shallowequal'
 
 export default ({
   storeClass,
-  propName,
+  propName = 'store',
   mapPropsToArgs = props => undefined,                           // eslint-disable-line no-unused-vars
   createStore = props => new storeClass(mapPropsToArgs(props)),  // eslint-disable-line new-cap
   shouldRecreateStore = (currentProps, nextProps) =>
