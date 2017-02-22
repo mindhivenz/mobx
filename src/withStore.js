@@ -1,9 +1,7 @@
 import React from 'react'
 import shallowEqual from 'shallowequal'
 
-/* eslint-disable no-console */
-
-// REVISIT: should we be reactive to observable changes used in constructor?
+// REVISIT: be reactive to observable changes used in constructor?
 
 export default ({
   storeClass,
