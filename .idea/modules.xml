@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/blank-node-idea-project-template.iml" filepath="$PROJECT_DIR$/blank-node-idea-project-template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobx.iml" filepath="$PROJECT_DIR$/mobx.iml" />
     </modules>
   </component>
 </project>

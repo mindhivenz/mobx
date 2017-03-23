@@ -5,7 +5,7 @@ import shallowEqual from 'shallowequal'
 
 export default ({
   storeClass,
-  propName = 'store',
+  propName = undefined,
   mapPropsToArgs = props => undefined,                           // eslint-disable-line no-unused-vars
   createStore = props => new storeClass(mapPropsToArgs(props)),  // eslint-disable-line new-cap
   shouldRecreateStore = (currentProps, nextProps) =>
@@ -41,6 +41,6 @@ export default ({
       }
 
       render() {
-        return React.createElement(Component, { ...this.props, [propName]: this.store })
+        return React.createElement(Component, propName ? { ...this.props, [propName]: this.store } : this.props)
       }
     }
