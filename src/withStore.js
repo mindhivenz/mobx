@@ -1,5 +1,5 @@
 import React from 'react'
-import shallowEqual from 'shallowequal'
+import shallowEqual from 'recompose/shallowEqual'
 
 // REVISIT: be reactive to observable changes used in constructor?
 
