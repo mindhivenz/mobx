@@ -22,7 +22,7 @@ class TickAtom {
     )
   }
 
-  current() {
+  get current() {
     if (! this.atom.reportObserved()) {
       console.warn('Observable time requested outside of any observer')   // eslint-disable-line no-console
       return app().clock()
@@ -58,7 +58,5 @@ const getTickAtom = (intervalSeconds) => {
 }
 
 export default () => ({
-  observableClock(intervalSeconds) {
-    getTickAtom(intervalSeconds).current()
-  }
+  observableClock: intervalSeconds => getTickAtom(intervalSeconds).current,
 })
