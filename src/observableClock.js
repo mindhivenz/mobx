@@ -3,7 +3,9 @@ import { app } from '@mindhive/di'
 
 // Based on the Atom example here: https://mobxjs.github.io/mobx/refguide/extending.html
 
-export default class TickAtom {
+const intervalSecondsAtomMap = {}
+
+class TickAtom {
   intervalSeconds
   debugName
   atom
@@ -20,7 +22,7 @@ export default class TickAtom {
     )
   }
 
-  getCurrent() {
+  current() {
     if (! this.atom.reportObserved()) {
       console.warn('Observable time requested outside of any observer')   // eslint-disable-line no-console
       return app().clock()
@@ -43,3 +45,20 @@ export default class TickAtom {
     this.intervalHandle = null
   }
 }
+
+const getTickAtom = (intervalSeconds) => {
+  const mapKey = Number(intervalSeconds)
+  const existingAtom = intervalSecondsAtomMap[mapKey]
+  if (existingAtom) {
+    return existingAtom
+  }
+  const newAtom = new TickAtom(intervalSeconds)
+  intervalSecondsAtomMap[mapKey] = newAtom
+  return newAtom
+}
+
+export default () => ({
+  observableClock(intervalSeconds) {
+    getTickAtom(intervalSeconds).current()
+  }
+})
