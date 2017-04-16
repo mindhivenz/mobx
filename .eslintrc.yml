@@ -1,5 +1,5 @@
 extends:
-  - mindhive
+  - mindhive-react
 rules:
   import/no-unresolved:
     - error
