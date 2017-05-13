@@ -1,6 +1,6 @@
 {
   "name": "@mindhive/mobx",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Our Mobx helpers and primitives",
   "contributors": [
     {
