@@ -6,7 +6,7 @@ import fromPairs from 'lodash/fromPairs'
 
 import { app } from '@mindhive/di'
 
-const inspect = domains => (BaseComponent) => {
+export default domains => (BaseComponent) => {
   const factory = createEagerFactory(BaseComponent)
 
   class Inject extends Component {
@@ -27,4 +27,3 @@ const inspect = domains => (BaseComponent) => {
   return Inject
 }
 
-export default inspect
