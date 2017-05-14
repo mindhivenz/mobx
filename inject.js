@@ -1,1 +1,1 @@
-module.exports = require('./dist/inspect')
+module.exports = require('./dist/inject')
