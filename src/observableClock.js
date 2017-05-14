@@ -1,9 +1,8 @@
 import { Atom, runInAction } from 'mobx'
 import { app } from '@mindhive/di'
+import memoize from 'lodash/memoize'
 
 // Based on the Atom example here: https://mobxjs.github.io/mobx/refguide/extending.html
-
-const intervalSecondsAtomMap = {}
 
 class TickAtom {
   intervalSeconds
@@ -46,16 +45,10 @@ class TickAtom {
   }
 }
 
-const getTickAtom = (intervalSeconds) => {
-  const mapKey = Number(intervalSeconds)
-  const existingAtom = intervalSecondsAtomMap[mapKey]
-  if (existingAtom) {
-    return existingAtom
-  }
-  const newAtom = new TickAtom(intervalSeconds)
-  intervalSecondsAtomMap[mapKey] = newAtom
-  return newAtom
-}
+const getTickAtom = memoize(
+  intervalSeconds => new TickAtom(intervalSeconds),
+  intervalSeconds => Number(intervalSeconds),
+)
 
 export default () => ({
   observableClock: intervalSeconds => getTickAtom(intervalSeconds).current,
