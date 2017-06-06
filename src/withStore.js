@@ -2,6 +2,7 @@ import React from 'react'
 import shallowEqual from 'recompose/shallowEqual'
 import { observer } from 'mobx-react'
 import fromPairs from 'lodash/fromPairs'
+import global from 'global'
 
 // REVISIT: be reactive to observable changes used in constructor?
 
@@ -15,6 +16,7 @@ export default ({
     ! shallowEqual(mapPropsToArgs(currentProps), mapPropsToArgs(nextProps)),
   updateStore = (store, props) => { if (typeof store.update === 'function') store.update(props) },
   stopStore = (store) => { if (typeof store.stop === 'function') store.stop() },
+  exposeAsGlobal = undefined,
 }) =>
   Component =>
     observer(
@@ -24,24 +26,39 @@ export default ({
 
         store = null
 
+        create(props) {
+          this.store = createStore(props)
+          updateStore(this.store, props)
+          if (exposeAsGlobal) {
+            global[exposeAsGlobal] = this.store
+          }
+        }
+
+        stop() {
+          if (this.store) {
+            stopStore(this.store)
+            if (exposeAsGlobal && global[exposeAsGlobal] === this.store) {
+              global[exposeAsGlobal] = null
+            }
+            this.store = null
+          }
+        }
+
         componentWillMount() {
-          this.store = createStore(this.props)
-          updateStore(this.store, this.props)
+          this.create(this.props)
         }
 
         componentWillReceiveProps(nextProps) {
           if (shouldRecreateStore(this.props, nextProps)) {
-            stopStore(this.store)
-            this.store = createStore(nextProps)
+            this.stop()
+            this.create(nextProps)
+          } else {
+            updateStore(this.store, nextProps)
           }
-          updateStore(this.store, nextProps)
         }
 
         componentWillUnmount() {
-          if (this.store) {
-            stopStore(this.store)
-            this.store = null
-          }
+          this.stop()
         }
 
         render() {
