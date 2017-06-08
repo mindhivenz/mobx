@@ -39,7 +39,7 @@ export default class StoreLifecycle {
   }
 
   @computed get loading() {
-    // @computed properties cannot be overwritten, therefore defer to a method that can
+    // @computed properties cannot be overridden, therefore defer to a method that can
     return this._loading()
   }
 
