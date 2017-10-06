@@ -39,6 +39,7 @@ export default class StoreLifecycle {
   }
 
   @computed get loading() {
+    // REVISIT: Is this still the case? Seems to be solved in mobx 3.3.0 https://github.com/mobxjs/mobx/issues/1121
     // @computed properties cannot be overridden, therefore defer to a method that can
     return this._loading()
   }
